@@ -1,0 +1,1893 @@
+<!DOCTYPE html>
+<html>
+  <!-- meta/link... -->
+  
+
+
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WB6FF1304R"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'G-WB6FF1304R');
+</script>
+
+
+  <title>注解与反射 | 光明自黑暗来</title>
+
+  <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://at.alicdn.com/t/font_1911880_c1nvbyezg17.css">
+  <link href="https://cdn.jsdelivr.net/gh/inkss/fontawesome@5.15.3/css/all.min.css" rel="stylesheet">
+  <link href="/js/swiper/swiper@5.4.1.min.css" rel="stylesheet">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/animate.min.css">
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+    
+<link rel="stylesheet" href="/js/fancybox/jquery.fancybox.min.css">
+
+  
+  
+    
+<link rel="stylesheet" href="/js/shareJs/share.min.css">
+
+  
+  <style>
+        @media (max-width: 992px) {
+            #waifu {
+                display: none;
+            }
+        }
+    </style>
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+
+    
+
+    <!-- import link -->
+    
+        
+            
+        
+            
+        
+    
+    <!-- import script -->
+    
+        
+            
+        
+            
+        
+    
+
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="光明自黑暗来" type="application/atom+xml">
+</head>
+
+  
+  <!-- 依赖于jquery和vue -->
+  
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+
+  
+
+  
+    
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+
+  
+  
+  <body>
+    <!-- 预加载动画 -->
+    <!-- 页面预加载动画 -->
+
+<div id='loader'>
+  <link rel="stylesheet" href="/js/loaded/index.css" >
+  <div class="loading-left-bg"></div>
+  <div class="loading-right-bg"></div>
+  <div class="spinner-box">
+    <div class="configure-border-1">
+      <div class="configure-core"></div>
+    </div>
+    <div class="configure-border-2">
+      <div class="configure-core"></div>
+    </div>
+    <div class="loading-word">加载中...</div>
+  </div>
+</div>
+
+<script>
+  var endLoading = function () {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loader').classList.add("loading");
+  }
+  window.addEventListener('DOMContentLoaded',endLoading);
+  
+</script>
+
+    
+    <!-- 判断是否为暗黑风格 -->
+    <!-- 判断是否为黑夜模式 -->
+<script>
+  let isDark = JSON.parse(localStorage.getItem('dark')) || JSON.parse('false');
+
+  if (isDark) {
+    $(document.body).addClass('darkModel');
+  }
+</script>
+
+    <!-- 需要在上面加载的js -->
+    <script>
+  function loadScript(src, cb) {
+    return new Promise(resolve => {
+      setTimeout(function () {
+        var HEAD = document.getElementsByTagName("head")[0] || document.documentElement;
+        var script = document.createElement("script");
+        script.setAttribute("type", "text/javascript");
+        if (cb) {
+          if (JSON.stringify(cb)) {
+            for (let p in cb) {
+              if (p == "onload") {
+                script[p] = () => {
+                  cb[p]()
+                  resolve()
+                }
+              } else {
+                script[p] = cb[p]
+                script.onload = resolve
+              }
+            }
+          } else {
+            script.onload = () => {
+              cb()
+              resolve()
+            };
+          }
+        } else {
+          script.onload = resolve
+        }
+        script.setAttribute("src", src);
+        HEAD.appendChild(script);
+      });
+    });
+  }
+
+  //https://github.com/filamentgroup/loadCSS
+  var loadCSS = function (href, before, media, attributes) {
+    return new Promise(resolve => {
+      setTimeout(function () {
+        var link = document.createElement('link');
+        link.rel = "stylesheet";
+        link.href = src;
+        link.onload = resolve;
+        document.getElementsByTagName("head")[0].appendChild(link);
+      });
+    });
+  };
+
+</script> 
+
+<!-- 轮播图所需要的js -->
+<script src="/js/swiper/swiper.min.js"></script>
+<script src="/js/swiper/vue-awesome-swiper.js"></script>
+<script src="/js/swiper/swiper.animate1.0.3.min.js"></script>
+
+<script type="text/javascript">
+  Vue.use(window.VueAwesomeSwiper)
+</script>
+
+
+  <script src="/js/vue-typed-js/index.js"></script>
+
+
+<!-- 首页的公告滚动插件的js需要重新加载 -->
+<script src="/js/vue-seamless-scroll/index.js"></script>
+
+<!-- 打字机效果js -->
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js"></script>
+
+
+    <div id="safearea">
+      <main class="main" id="pjax-container">
+        <!-- 头部导航 -->
+        
+<header class="header   " 
+  id="navHeader"
+  style="position: fixed;
+  left: 0; top: 0; z-index: 10;width: 100%;"
+>
+  <div class="header-content">
+    <div class="bars">
+      <div id="appDrawer" class="sidebar-image">
+  <div class="drawer-box-icon">
+    <i class="fas fa-bars" aria-hidden="true" @click="showDialogDrawer"></i>
+  </div>
+  
+  <transition name="fade">
+    <div class="drawer-box_mask" v-cloak style="display: none;" v-show="visible" @click.self="cancelDialogDrawer">
+    </div>
+  </transition>
+  <div class="drawer-box" :class="{'active': visible}">
+    <div class="drawer-box-head bg-color">
+      <img class="drawer-box-head_logo lazyload placeholder" src="/medias/logo.png" class="lazyload placeholder" data-srcset="/medias/logo.png" srcset="https://img2.baidu.com/it/u=2037979560,2772131037&fm=26&fmt=auto&gp=0.jpg" alt="logo">
+      <h3 class="drawer-box-head_title">光明自黑暗来</h3>
+      <h5 class="drawer-box-head_desc">分享一些有趣的心情和文章</h5>
+    </div>
+    
+    <div class="drawer-box-content">
+      <ul class="drawer-box-content_menu">
+        
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/" class="drawer-menu-item-link">
+                  
+                    <i class="fas fa-home" aria-hidden="true"></i>
+                  
+                  <span class="name">首页</span>
+                </a>
+              
+            </li>
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/archives" class="drawer-menu-item-link">
+                  
+                    <i class="fas fa-archive" aria-hidden="true"></i>
+                  
+                  <span class="name">归档</span>
+                </a>
+              
+            </li>
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/tags" class="drawer-menu-item-link">
+                  
+                    <i class="fas fa-tags" aria-hidden="true"></i>
+                  
+                  <span class="name">标签</span>
+                </a>
+              
+            </li>
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/categories" class="drawer-menu-item-link">
+                  
+                    <i class="fas fa-bookmark" aria-hidden="true"></i>
+                  
+                  <span class="name">分类</span>
+                </a>
+              
+            </li>
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/about" class="drawer-menu-item-link">
+                  
+                    <i class="fas fa-user" aria-hidden="true"></i>
+                  
+                  <span class="name">关于</span>
+                </a>
+              
+            </li>
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="javascript:;" class="drawer-menu-item-link has-children" @click="openOrCloseMenu(5)">
+                  <span>
+                    
+                      <i class="fas fa-link"></i>
+                    
+                    <span class="name">更多</span>
+                  </span>
+                  <i class="fas fa-chevron-left arrow " :class="{'icon-rotate': isOpen(5)}" aria-hidden="true"></i>
+                </a>
+                <ul class="drawer-sub-menu" v-if="isOpen(5)">
+                  
+                  <li>
+                    <a href="/hu">
+                      
+                      <i class="fas fa-cloud" style="margin-top: -20px;"></i>
+                      
+                      <span>说点胡话</span>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href="/gallery">
+                      
+                      <i class="fa fa-folder" style="margin-top: -20px;"></i>
+                      
+                      <span>图库</span>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a target="_blank" rel="noopener" href="http://baidu.com">
+                      
+                      <i class="fa fa-search" style="margin-top: -20px;"></i>
+                      
+                      <span>百度</span>
+                    </a>
+                  </li>
+                  
+                </ul>
+              
+            </li>
+          
+        
+        
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  var body = document.body || document.documentElement || window;
+  var vm = new Vue({
+    el: '#appDrawer',
+    data: {
+      visible: false,
+      top: 0,
+      openArr: [],
+    },
+    computed: {
+    },
+    mounted() {
+    },
+    methods: {
+      isOpen(index) {
+        if (this.openArr.includes(index)) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      openOrCloseMenu(curIndex) {
+        const index = this.openArr.indexOf(curIndex);
+        if (index !== -1) {
+          this.openArr.splice(index, 1);
+        } else {
+          this.openArr.push(curIndex);
+        }
+      },
+      showDialogDrawer() {
+        this.visible = true;
+        // 防止页面滚动，只能让弹框滚动
+        this.top = $(document).scrollTop()
+        body.style.cssText = 'width: 100%; height: 100%;overflow: hidden;';
+      },
+      cancelDialogDrawer() {
+        this.visible = false;
+        body.removeAttribute('style');
+        $(document).scrollTop(this.top)
+      }
+    },
+    created() {}
+  })
+</script>
+
+    </div>
+    <div class="blog-title" id="author-avatar">
+      
+        <div class="avatar">
+          <img src="/medias/logo.png" class="lazyload placeholder" data-srcset="/medias/logo.png" srcset="https://img2.baidu.com/it/u=2037979560,2772131037&fm=26&fmt=auto&gp=0.jpg" alt="logo">
+        </div>
+      
+      <a href="/" class="logo">光明自黑暗来</a>
+    </div>
+    <nav class="navbar">
+      <ul class="menu">
+        
+          
+            <li class="menu-item" style="position: relative;">
+              
+                <a href="/" class="menu-item-link" title="首页">
+                  
+                    <i class="fas fa-home" aria-hidden="true"></i>
+                  
+                  <span class="name">首页</span>
+                </a>
+              
+            </li>
+          
+            <li class="menu-item" style="position: relative;">
+              
+                <a href="/archives" class="menu-item-link" title="归档">
+                  
+                    <i class="fas fa-archive" aria-hidden="true"></i>
+                  
+                  <span class="name">归档</span>
+                </a>
+              
+            </li>
+          
+            <li class="menu-item" style="position: relative;">
+              
+                <a href="/tags" class="menu-item-link" title="标签">
+                  
+                    <i class="fas fa-tags" aria-hidden="true"></i>
+                  
+                  <span class="name">标签</span>
+                </a>
+              
+            </li>
+          
+            <li class="menu-item" style="position: relative;">
+              
+                <a href="/categories" class="menu-item-link" title="分类">
+                  
+                    <i class="fas fa-bookmark" aria-hidden="true"></i>
+                  
+                  <span class="name">分类</span>
+                </a>
+              
+            </li>
+          
+            <li class="menu-item" style="position: relative;">
+              
+                <a href="/about" class="menu-item-link" title="关于">
+                  
+                    <i class="fas fa-user" aria-hidden="true"></i>
+                  
+                  <span class="name">关于</span>
+                </a>
+              
+            </li>
+          
+            <li class="menu-item" style="position: relative;">
+              
+                <a href="javascript:;" class="menu-item-link" title="更多">
+                  
+                    <i class="fas fa-link"></i>
+                  
+                  <span class="name">更多</span>
+                  <i class="fas fa-chevron-down arrow" aria-hidden="true"></i>
+                </a>
+                <ul class="sub-menu">
+                  
+                  <li>
+                    <a href="/hu">
+                      
+                      <i class="fas fa-cloud" style="margin-top: -20px;"></i>
+                      
+                      <span>说点胡话</span>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href="/gallery">
+                      
+                      <i class="fa fa-folder" style="margin-top: -20px;"></i>
+                      
+                      <span>图库</span>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a target="_blank" rel="noopener" href="http://baidu.com">
+                      
+                      <i class="fa fa-search" style="margin-top: -20px;"></i>
+                      
+                      <span>百度</span>
+                    </a>
+                  </li>
+                  
+                </ul>
+              
+            </li>
+          
+        
+      </ul>
+      
+      
+        <div id="appSearch">
+  <div class="search"  @click="showDialog()"><i class="fas fa-search" aria-hidden="true"></i></div>
+  <transition name="fade">
+    <div class="message-box_wrapper" style="display: none;" v-cloak v-show="dialogVisible" @click.self="cancelDialogVisible()">
+      <div class="message-box animated bounceInDown">
+        <h2>
+          <span>
+            <i class="fas fa-search" aria-hidden="true"></i>
+            <span class="title">本地搜索</span>
+          </span>
+          <i class="fas fa-times close" pointer style="float:right;" aria-hidden="true" @click.self="cancelDialogVisible()"></i>
+        </h2>
+        <form class="site-search-form">
+          <input type="text"
+            placeholder="请输入关键字"
+            id="local-search-input" 
+            @click="getSearchFile()"
+            class="st-search-input"
+            v-model="searchInput"
+          />
+        </form>
+        <div class="result-wrapper">
+          <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+      </div>
+    </div>
+  </transition>
+</div>
+<script src="/js/local_search.js"></script>
+<script>
+  var body = document.body || document.documentElement || window;
+  var vm = new Vue({
+    el: '#appSearch',
+    data: {
+      dialogVisible: false,
+      searchInput: '',
+      top: 0,
+    },
+    computed: {
+    },
+    mounted() {
+      window.addEventListener('pjax:complete', () => {
+        this.cancelDialogVisible();
+      })
+    },
+    methods: {
+      showDialog() {
+        this.dialogVisible = true;
+        // 防止页面滚动，只能让弹框滚动
+        this.top = $(document).scrollTop()
+        body.style.cssText = 'overflow: hidden;';
+      },
+      getSearchFile() {
+        if (!this.searchInput) {
+          getSearchFile("/search.xml");
+        }
+      },
+      cancelDialogVisible() {
+        this.dialogVisible = false;
+        body.removeAttribute('style');
+        $(document).scrollTop(this.top)
+      },
+    },
+    created() {}
+  })
+</script>
+<!-- 解决刷新页面闪烁问题，可以在元素上添加display: none, 或者用vue.extend方法，详情：https://blog.csdn.net/qq_31393401/article/details/81017912 -->
+<!-- 下面是搜索基本写法 -->
+<!-- <script type="text/javascript" id="local.search.active">
+  var inputArea = document.querySelector("#local-search-input");
+  inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+  inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script> -->
+
+      
+
+    </nav>
+  </div>
+  
+  
+</header>
+        <!-- 内容区域 -->
+        
+ <!-- prismjs 代码高亮 -->
+ 
+
+
+<div class="bg-dark-floor" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -1;"></div>
+
+
+  <!-- 文章详情页顶部图片和标题 -->
+
+
+
+
+<div class="post-detail-header" id="thumbnail_canvas" style="background-repeat: no-repeat; background-size: cover; 
+  background-position: center center;position: relative;background-image:url('/medias/5.jpg')">
+  <div class="post-detail-header-mask"></div>
+  <canvas id="header_canvas"style="position:absolute;bottom:0;pointer-events:none;"></canvas>
+  
+  <div class="post-detail-header_info-box">
+    <div class="title-box">
+      <span class="title">
+        注解与反射
+      </span>
+    </div>
+    
+    
+      
+        <span class="post-detail-header_date">
+          <i class="fas fa-calendar"></i> 发表于：2021-11-18 |
+        </span>
+      
+
+      
+        <span class="post-detail-header_categories">
+          <i class="iconfont iconbookmark1"></i> 分类：
+          
+            <a href="/categories/java/" class="post-detail-header_category">
+              java
+            </a>
+          
+        </span>
+      
+
+      
+        <div class="post-detail-header_wordcount">
+          <span class="totalcount">
+            <i class="fas fa-file-text-o"></i> 字数统计: 4.1k |
+          </span>
+  
+          <span class="min2read">
+            <i class="fas fa-clock"></i> 阅读时长: 15分钟 |
+          </span>
+  
+          
+            <span class="reading">
+              <i class="fas fa-eye"></i> 阅读量：<span id="busuanzi_value_page_pv"></span>
+            </span>
+          
+        </div>
+      
+    
+  </div>
+  
+  
+</div>
+
+
+
+
+
+<div class="row justify-position" 
+  style="padding-top: 0px;">
+  <div class="main-content">
+    <article class="post post-detail">
+      <div class="post-content">
+        <p>无需多言，反射可以说是学习java的路上必不可少的知识点，同时，说到反射，自然就不可避免的提起注解</p>
+<span id="more"></span>
+
+<h1 id="注解（java-Annotation）"><a href="#注解（java-Annotation）" class="headerlink" title="注解（java.Annotation）"></a>注解（java.Annotation）</h1><p>注释 comment</p>
+<h2 id="什么是注解"><a href="#什么是注解" class="headerlink" title="什么是注解"></a>什么是注解</h2><ul>
+<li>java5.0开始引入的新技术</li>
+<li>Annotation的作用：<ul>
+<li>不是程序本身，可以对程序作出解释（这一点而言和注释没有区别）</li>
+<li>可以被其他程序（如编译器）读取</li>
+<li>有检查和约束的作用</li>
+</ul>
+</li>
+<li>Annotation的格式：<ul>
+<li>注解是以”@注释名”在代码中存在的，还可以添加一些参数值，例如@SuppressWarnings(value=”unchecked”)</li>
+</ul>
+</li>
+<li>Annotaion在哪里使用？<ul>
+<li>可以附加在package，class，method，filed等上面，相当于增加额外的辅助信息，可以通过反射机制编程实现对这些元数据的访问。</li>
+</ul>
+</li>
+</ul>
+<h2 id="内置注解"><a href="#内置注解" class="headerlink" title="内置注解"></a>内置注解</h2><hr>
+<p>  @Override：定义在java.lang.Override中，此注释只适用于修辞方法，表示一个方法打算重写超类类中另一个方法声明。</p>
+<ul>
+<li><p>@Deprecated：定义在java.lang.Deprecated中，此注释可以用于修辞方法，属性，类，表示不鼓励程序员使用这样的元素，通常是因为它很危险或存在更好的选择。</p>
+</li>
+<li><p>@SuppressWarnings：定义在java.lang.SuppressWarnings中，用来抑制编译好的警告信息</p>
+<ul>
+<li>与前两个注释不同，它需要一个参数才能正确使用，这些参数都是已经定义好的，直接选择使用即可</li>
+<li>@SuppressWarnings(“all”)</li>
+<li>@SuppressWarnings(“unchecked”)</li>
+<li>@SuppressWarnings(value={“unchecked”,”deprecation”})</li>
+</ul>
+</li>
+</ul>
+<h2 id="元注解"><a href="#元注解" class="headerlink" title="元注解"></a>元注解</h2><hr>
+<p>元注解的作用是负责注解其他注解，java定义了四个标准的meta-annotation类型，它们被用来提供对其他annotation类型作说明。</p>
+<p>这些类型和它们所支持的类在java.lang.annotation包中可以找到(@Target,@Retention,@Documented,@Inherited)</p>
+<ul>
+<li><strong>@Target：用于描述注解的使用范围（被描述的注解可以使用在什么地方）</strong></li>
+<li><strong>Retention：表示需要在什么级别保存该注释信息，用于描述注解的生命周期</strong><ul>
+<li><strong>(SOURCE(源码)&lt;CLASS(类)&lt;RUNTIME(运行时)</strong>)</li>
+</ul>
+</li>
+<li>@Document：说明该注解被生成在javadoc中</li>
+<li>@Inherited:说明子类可以继承父类中的该注解</li>
+</ul>
+<h2 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h2><hr>
+<p>使用功能@interface自定义注解 时，自动继承了java.lang.annotation.Annotation接口</p>
+<ul>
+<li>@interface用来声明一个注解，格式：public @interface 注解名{定义内容}</li>
+<li>其中声明参数与声明方法类似。</li>
+<li>方法的名称就是参数的名称</li>
+<li>返回值类型就是参数的类型(返回值只能是基本类型，Class，String，enum)</li>
+<li>可以通过default来声明参数的默认值</li>
+<li>如果只有一个参数，一般参数名为value</li>
+<li>注解元素必须要有值，我们定义注解元素时，经常使用空字符串，0来作为默认值</li>
+</ul>
+<p>注解的参数：参数类型+参数名();</p>
+<p>如果注解定义了参数，注解可以显示赋值，但是如果没有默认值则必须赋值。<img src="https://cdn.jsdelivr.net/gh/oyjc13/pic@main/img/202112091402638.png" class="lazyload placeholder" data-srcset="https://cdn.jsdelivr.net/gh/oyjc13/pic@main/img/202112091402638.png" srcset="https://img2.baidu.com/it/u=2037979560,2772131037&fm=26&fmt=auto&gp=0.jpg" alt="image-20210612152554984"></p>
+<h1 id="反射机制-java-Reflection"><a href="#反射机制-java-Reflection" class="headerlink" title="反射机制(java.Reflection)"></a>反射机制(java.Reflection)</h1><blockquote>
+<p>静态VS动态语言</p>
+</blockquote>
+<p><strong>动态语言</strong></p>
+<p>是一类在运行时可以改变其结构的语言：例如新的函数、对象、甚至    代码可以被引进，已有的函数可以被删除或是其他结构上的变化。简而言之就是代码可以根据某些条件改变自身结构</p>
+<p>主要动态语言：Object-C、C#、JavaScript、PHP、Python等</p>
+<p><strong>静态语言</strong></p>
+<p>与动态语言想对应的，运行时建构不可变的语言就是静态语言。如java、C、C++</p>
+<p>Java不是动态语言，但Java可以称之为”准动态语言”。即Java有一定的动态性，我们可以利用反射机制获得类似动态语言的特性。Java的动态性让编程的时候更加灵活</p>
+<h2 id="什么是反射"><a href="#什么是反射" class="headerlink" title="什么是反射"></a>什么是反射</h2><hr>
+<p><strong>Reflection(反射)是Java被视为动态语言的关键，反射机制允许任何程序在执行期借助于ReflectionAPI取得任何类的内部信息</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class c=Class.forName(&quot;java.lang.String&quot;)</span><br></pre></td></tr></table></figure>
+
+<p><strong>加载完类之后，在堆内存的方法区中就产生了一个Class类型的对象(一个类只有一个Class对象)，这个对象就包含了完整的类的结构信息。我们通过这个对象看到类的结构。这个对象就像一面镜子，透过这个镜子看到类的结构，所以，我们形象的称之为：反射</strong></p>
+<p>正常方式：引入需要的“包类名称”→通过new实例化→取得实例化对象</p>
+<p>反射方式：实例化对象→getClass()方法→得到完整的“包类”名称</p>
+<h2 id="反射机制的作用"><a href="#反射机制的作用" class="headerlink" title="反射机制的作用"></a>反射机制的作用</h2><p>1.在运行时判断任意一个对象所属的类</p>
+<p>2.在运行时构造任意一个类的对象</p>
+<p>3.在运行时判断任意一个类所具有的成员变量和方法</p>
+<p>4.在运行时获取泛型信息</p>
+<p>5.在运行时调用任意一个对象的成员变量和方法</p>
+<p>6.在运行时处理注解</p>
+<p>7.生成动态代理</p>
+<h3 id="反射的优点"><a href="#反射的优点" class="headerlink" title="反射的优点"></a><strong>反射的优点</strong></h3><p>可以实现动态创建对象和编译，体现出很大的灵活性</p>
+<h3 id="反射的缺点"><a href="#反射的缺点" class="headerlink" title="反射的缺点"></a>反射的缺点</h3><p>对性能有影响。使用反射基本上是一种解释操作，我们可以告诉JVM，我们希望做什么并且它满足我们的要求。这类操作总是慢于直接执行相同的操作</p>
+<h3 id="主要API"><a href="#主要API" class="headerlink" title="主要API"></a>主要API</h3><ul>
+<li>java.lang.Class代表一个类</li>
+<li>java.lang.reflect.Method代表类的方法</li>
+<li>java.lang.reflect.Field代表类的成员变量</li>
+<li>java.lang.reflect.Constructor代表类的构造器</li>
+</ul>
+<blockquote>
+<p>注：一个类在内存中只有一个Class对象</p>
+<p>一个类被加载后，类的整个结构都会被封装在Class对象中</p>
+</blockquote>
+<h3 id="Class类"><a href="#Class类" class="headerlink" title="Class类"></a>Class类</h3><p>对象照镜子后可以得到的信息：某个类的属性、方法和构造器、某个类到底实现了哪些接口。<br>对于每个类而言，JRE都为其保留一个不变的Class类型的对象。一个Class对象包含了特定某个结构（class/interface/enum/annotation/primitive type/void/]）的有关信息。</p>
+<ul>
+<li>Class对象只能由系统建立对象</li>
+<li>一个加载的类在JVM中只会有一个Class实例</li>
+<li>一个Class对象对应的是一个加载到JVM中的一个cless文件</li>
+<li>每个类的实例都会记得自己是由哪个Class实例所生成</li>
+<li>通过Class可以完整地得到一个类中的所有被加载的结构</li>
+<li>Class类是Reflection的根源，针对任何你想动态加载、运的类，唯有先获得相应的Class对象</li>
+</ul>
+<h3 id="Class类的常用方法"><a href="#Class类的常用方法" class="headerlink" title="Class类的常用方法"></a>Class类的常用方法</h3><table>
+<thead>
+<tr>
+<th><strong>方法名</strong></th>
+<th>功能说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>static ClassforName(String name)</td>
+<td>返回指定类名name的Class对象</td>
+</tr>
+<tr>
+<td>Object newInstance()</td>
+<td>调用缺省构造函数，返回Class对象的一个实例</td>
+</tr>
+<tr>
+<td>getName()</td>
+<td>返回此Class对象所表示的实体(类，接口，数组类，或void)的名称</td>
+</tr>
+<tr>
+<td>Class getSuperClass()</td>
+<td>返回当前class对象的父类的Class对象</td>
+</tr>
+<tr>
+<td>Class[] getinterfaces()</td>
+<td>获取当前Class对象的接口</td>
+</tr>
+<tr>
+<td>ClassLoader getClassLoader()</td>
+<td>获取该类的类加载器</td>
+</tr>
+<tr>
+<td>Constructor[] getConstructors()</td>
+<td>返回一个包含某些Constructor对象的数组</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="class类的创建方式"><a href="#class类的创建方式" class="headerlink" title="class类的创建方式"></a>class类的创建方式</h3><p>hashCode()字符串的哈希值</p>
+<p>方式一：通过对象获取</p>
+<p>Class c1 = person.getClass();</p>
+<p>方式二：forname获得</p>
+<p>Class c2 = Class.forName(“包名”);</p>
+<p>方式三：通过类名.class获得</p>
+<p>Class c3 =Student.class;</p>
+<p>方法四：内置基本数据类型可以直接用类名.Type</p>
+<p>Class c4=Integer.TYPE;</p>
+<p>方法五:通过子类获取父类</p>
+<p>Class c5=c1.getsuperclass();</p>
+<h3 id="哪些类型可以有Class对象（万物皆对象）"><a href="#哪些类型可以有Class对象（万物皆对象）" class="headerlink" title="哪些类型可以有Class对象（万物皆对象）"></a>哪些类型可以有Class对象（万物皆对象）</h3><p>class：外部类，成员(成员内部类，静态内部类)，局部内部类，匿名内部类</p>
+<p>interface：接口</p>
+<p>[]：数组</p>
+<p>enum：枚举</p>
+<p>annotation：注解@interface</p>
+<p>primitive type：基本数据类型</p>
+<p>void</p>
+<p>底层class相同则对象依旧是同一个</p>
+<h2 id="java内存分析"><a href="#java内存分析" class="headerlink" title="java内存分析"></a>java内存分析</h2><p><img src="https://cdn.jsdelivr.net/gh/oyjc13/pic@main/img/202112091403883.png" class="lazyload placeholder" data-srcset="https://cdn.jsdelivr.net/gh/oyjc13/pic@main/img/202112091403883.png" srcset="https://img2.baidu.com/it/u=2037979560,2772131037&fm=26&fmt=auto&gp=0.jpg" alt="image-20210615163740464"></p>
+<h3 id="类的加载过程"><a href="#类的加载过程" class="headerlink" title="类的加载过程"></a>类的加载过程</h3><blockquote>
+<p>当程序主动使用功能某个类时，如果该类还未被加载到内存中，则系统会通过如下三个步骤来对该类进行初始化</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/oyjc13/pic@main/img/202112091403767.png" class="lazyload placeholder" data-srcset="https://cdn.jsdelivr.net/gh/oyjc13/pic@main/img/202112091403767.png" srcset="https://img2.baidu.com/it/u=2037979560,2772131037&fm=26&fmt=auto&gp=0.jpg" alt="image-20210615164414400"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassLoad</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">            A a=<span class="keyword">new</span> A();</span><br><span class="line">            System.out.println(A.m);</span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">              1.加载到内存，会产生一个对应的class对象</span></span><br><span class="line"><span class="comment">              2.链接，链接结束后m=0；</span></span><br><span class="line"><span class="comment">              3.初始化</span></span><br><span class="line"><span class="comment">                &lt;clinit&gt;()&#123;</span></span><br><span class="line"><span class="comment">                    System.out.println(&quot;A静态代码初始化&quot;);</span></span><br><span class="line"><span class="comment">                    m=300;</span></span><br><span class="line"><span class="comment">                    m=200;</span></span><br><span class="line"><span class="comment">                &#125;</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;A类静态代码块加载！&quot;</span>);</span><br><span class="line">        m=<span class="number">300</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> m=<span class="number">100</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">A</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;A类无参构造初始化!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="什么时候会发生类初始化"><a href="#什么时候会发生类初始化" class="headerlink" title="什么时候会发生类初始化"></a>什么时候会发生类初始化</h3><blockquote>
+<p>类的主动引用(一定会发生类的初始化)</p>
+</blockquote>
+<ul>
+<li>当虚拟机启动，先初始化main方法所在的类</li>
+<li>new一个类的对象</li>
+<li>调用类的静态成员(除了final常量)和静态方法</li>
+<li>使用java.lang.reflect包的方法对类进行反射调用（反射也会产生主动引用）</li>
+<li>当初始化一个类，如果父类没有被初始化，则先初始化父类</li>
+</ul>
+<blockquote>
+<p>类的被动引用(不会发生类的初始化)</p>
+</blockquote>
+<ul>
+<li>当访问一个静态域时，只有真正声明这个域的类才会被初始化。如：使用子类引用父类的静态变量，不会导致子类初始化</li>
+<li>通过数组定义类引用，不会触发此类的初始化</li>
+<li>引用常量不会触发此类的初始化(常量在链接阶段就存入调用类的常量池中)</li>
+</ul>
+<h3 id="类加载器的作用"><a href="#类加载器的作用" class="headerlink" title="类加载器的作用"></a>类加载器的作用</h3><p>java核心jar包：rt.jar</p>
+<blockquote>
+<p>类加载的作用：将class文件字节码内容加载到内存中，并将这些静态数据转换成方法区的运行数据结构，然后在堆中生成一个代表这个类的java.lang.Class对象，作为方法区中类数据的访问入口。</p>
+</blockquote>
+<blockquote>
+<p>类缓存：标准的JavaSE类加载器可以按要求查找类，但一旦某个类被加载到类加载器中，它将维持加载（缓存）一段时间。不过JVM垃圾回收机制可以回收这些Class对象</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/oyjc13/pic@main/img/202112091404899.png" class="lazyload placeholder" data-srcset="https://cdn.jsdelivr.net/gh/oyjc13/pic@main/img/202112091404899.png" srcset="https://img2.baidu.com/it/u=2037979560,2772131037&fm=26&fmt=auto&gp=0.jpg" alt="image-20210615204000980"></p>
+<p>类的加载器作用是用来把类(class)装载进内存的。JVM规范定义了如下类型的类加载器。</p>
+<p>引导类加载器：用C++编写的，是JVM自带的类加载器，负责java平台核心库，用来装载核心类库。<strong>该加载器无法直接获取</strong>（扩展类加载器的父类加载器：根加载器）</p>
+<p>扩展类加载器：负责jre/lib/ext目录下的jar包或-D java.ext.dirs指定目录下的jar包装入工作库（系统加载器的父类加载器）</p>
+<p>系统类加载器：负责java -classpath或-D java.class.path所指的目录下的类与jar包装入工作，是最常用的加载器（用户加载类）</p>
+<h4 id="如何获取系统类加载器可以加载的路径"><a href="#如何获取系统类加载器可以加载的路径" class="headerlink" title="如何获取系统类加载器可以加载的路径"></a>如何获取系统类加载器可以加载的路径</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.getProperty(“java.class.path”);</span><br></pre></td></tr></table></figure>
+
+<h3 id="通过反射获取运行时类的完整结构"><a href="#通过反射获取运行时类的完整结构" class="headerlink" title="通过反射获取运行时类的完整结构"></a>通过反射获取运行时类的完整结构</h3><p>Filed、Method、Constructor、Superclass、Interface、Annotation</p>
+<ul>
+<li>实现的全部接口</li>
+<li>所继承的父类</li>
+<li>全部的构造器</li>
+<li>全部的方法</li>
+<li>全部的Field</li>
+<li>注解</li>
+<li>。。。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"> Class c=Class.forName(<span class="string">&quot;com.example.classLoad.User&quot;</span>);</span><br><span class="line"><span class="comment">//        User user=new User();</span></span><br><span class="line">  <span class="comment">// Class&lt;? extends User&gt;aClass=user.getClass();</span></span><br><span class="line">        <span class="comment">//c=user.getClass();</span></span><br><span class="line">        <span class="comment">//获取类的包名</span></span><br><span class="line">        System.out.println(c.getName());</span><br><span class="line">        <span class="comment">//获取类的父类</span></span><br><span class="line">        System.out.println(c.getSuperclass());</span><br><span class="line">        <span class="comment">//获取类名</span></span><br><span class="line">        System.out.println(c.getSimpleName());</span><br><span class="line">        <span class="comment">//获取类的接口</span></span><br><span class="line">        System.out.println(c.getInterfaces());</span><br><span class="line">        <span class="comment">//获取所有属性 public 级别</span></span><br><span class="line">        Field[] fields=c.getFields();</span><br><span class="line">        <span class="comment">//获取所有属性 所有级别</span></span><br><span class="line">        fields=c.getDeclaredFields();</span><br><span class="line">        <span class="keyword">for</span> (Field field : fields) &#123;</span><br><span class="line">            System.out.println(field);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//获取指定属性</span></span><br><span class="line">        Field field=c.getDeclaredField(<span class="string">&quot;userName&quot;</span>);</span><br><span class="line">        System.out.println(field);</span><br><span class="line">        <span class="comment">//获得所有方法</span></span><br><span class="line">        System.out.println(<span class="string">&quot;所有方法:\n&quot;</span>);</span><br><span class="line">        <span class="comment">//获得本类及其父类的全部public方法</span></span><br><span class="line">        Method[] methods=c.getMethods();</span><br><span class="line">        <span class="keyword">for</span> (Method method : methods) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;正常获取:&quot;</span>+method);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//获取本类的所有方法</span></span><br><span class="line">        methods=c.getDeclaredMethods();</span><br><span class="line">        <span class="keyword">for</span> (Method method : methods) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;getDeclaredMethods：&quot;</span>+method);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//获取指定方法</span></span><br><span class="line">        Method method=c.getMethod(<span class="string">&quot;setUserName&quot;</span>, String.class);</span><br><span class="line">        Method method1=c.getMethod(<span class="string">&quot;getUserName&quot;</span>,<span class="keyword">null</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;获取指定方法:&quot;</span>);</span><br><span class="line">        System.out.println(method);</span><br><span class="line">        System.out.println(method1);</span><br><span class="line">        <span class="comment">//获得所有构造器</span></span><br><span class="line">        System.out.println(<span class="string">&quot;获得的构造器&quot;</span>);</span><br><span class="line">        Constructor[] constructors=c.getConstructors();</span><br><span class="line">        <span class="keyword">for</span> (Constructor constructor : constructors) &#123;</span><br><span class="line">            System.out.println(constructor);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//获取指定的构造器</span></span><br><span class="line">        Constructor constructor1=c.getConstructor(String.class,String.class);</span><br><span class="line">        System.out.println(constructor1);</span><br></pre></td></tr></table></figure>
+
+<h2 id="动态创建对象"><a href="#动态创建对象" class="headerlink" title="动态创建对象"></a>动态创建对象</h2><blockquote>
+<p>Class可以做什么？</p>
+</blockquote>
+<p>创建类的对象：调用Class对象的newInstance()方法</p>
+<ol>
+<li>类必须有一个无参构造器</li>
+<li>类的构造器的访问权限需要足够</li>
+</ol>
+<p><strong>问：如果没有无参构造器就不能创建对象吗？在操作的时候明确的调用类中的构造器，并将参数传递进去，就可以进行实例化操作</strong></p>
+<p>步骤如下：</p>
+<ol>
+<li>通过Class类的getDeclaredConstructor(Class …ParamterTypes)取得本类中指定的构造器</li>
+<li>向构造器的形参中传递一个对象数组进去，里面包含了构造器中所需的各个参数</li>
+<li>通过Constructor实例化对象</li>
+</ol>
+<h3 id="调用指定的方法"><a href="#调用指定的方法" class="headerlink" title="调用指定的方法"></a>调用指定的方法</h3><blockquote>
+<p>通过反射，调用类中的方法，通过Method类完成</p>
+</blockquote>
+<ol>
+<li>通过Class类的getMethod(String name,Class…parameterTypes)方法取得一个Method对象，并设置此方法操作时所需要的参数类型</li>
+<li>之后使用Object invoke(Object obj,Object[] args)进行调用，并向方法中传递要设置的obj对象的参数信息</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/oyjc13/pic@main/img/202112081152568.png" class="lazyload placeholder" data-srcset="https://cdn.jsdelivr.net/gh/oyjc13/pic@main/img/202112081152568.png" srcset="https://img2.baidu.com/it/u=2037979560,2772131037&fm=26&fmt=auto&gp=0.jpg" alt="image-20210618020626859"></p>
+<ol>
+<li>Object对应原方法的返回值，若原方法无返回值，此时返回null</li>
+<li>若原方法若为静态方法，此时形参Object obj可为null</li>
+<li>若原方法形参列表为空，则Object[] args为null</li>
+<li>若原方法声明为private,则需要在调用此invoke()方法前，显式调用方法对象的setAccessible(true)方法，将可访问private的方法。</li>
+</ol>
+<h4 id="setAccessible"><a href="#setAccessible" class="headerlink" title="setAccessible"></a>setAccessible</h4><ul>
+<li>Method和Field、Constructor对象都有setAccessible()方法。</li>
+<li>setAccessible作用是启动和禁用访问安全检查的开关。</li>
+<li>参数值为true则指示反射的对象在使用时应该取消Java语言访问检查。<ul>
+<li>提高反射的效率。如果代码中必须用反射，而该句代码需要频繁的被调用，那么请设置为true。</li>
+<li>使得原本无法访问的私有成员也可以访问</li>
+</ul>
+</li>
+<li>参数值为false则指示反射的对象应该实施Java语言访问检查</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取Class对象</span></span><br><span class="line">Class c=Class.forName(<span class="string">&quot;com.example.classLoad.User&quot;</span>);</span><br><span class="line"><span class="comment">//构造一个对象</span></span><br><span class="line">User user =(User) c.newInstance();</span><br><span class="line"><span class="comment">//System.out.println(user);</span></span><br><span class="line"><span class="comment">/*通过构造器创建对象*/</span></span><br><span class="line"><span class="comment">//获取构造器</span></span><br><span class="line">Constructor constructor=c.getDeclaredConstructor(String.class,String.class);</span><br><span class="line"><span class="comment">//获取对象</span></span><br><span class="line">Object user1 = constructor.newInstance(<span class="string">&quot;洛琊&quot;</span>,<span class="string">&quot;0319&quot;</span>);</span><br><span class="line"><span class="comment">//System.out.println(user1);</span></span><br><span class="line"><span class="comment">/*通过反射调用方法*/</span></span><br><span class="line"><span class="comment">//获取方法</span></span><br><span class="line">Method method=c.getDeclaredMethod(<span class="string">&quot;setUserName&quot;</span>, String.class);</span><br><span class="line"><span class="comment">//运行方法 invoke:激活</span></span><br><span class="line"><span class="comment">//第一个参数：对象 第二个参数：方法的参数</span></span><br><span class="line">method.invoke(user,<span class="string">&quot;洛琊&quot;</span>);</span><br><span class="line"><span class="comment">//测试方法</span></span><br><span class="line"><span class="comment">//System.out.println(user.getUserName());</span></span><br><span class="line"><span class="comment">/*通过反射操作对象的属性*/</span></span><br><span class="line">Field userName = c.getDeclaredField(<span class="string">&quot;userName&quot;</span>);</span><br><span class="line"><span class="comment">//不能直接操作私有属性，需要关闭程序的安全检测，属性或者方法的setAccessible(true)</span></span><br><span class="line">userName.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">userName.set(user,<span class="string">&quot;洛琊&quot;</span>);</span><br><span class="line"><span class="comment">//测试结果</span></span><br><span class="line"><span class="comment">//System.out.println(user.getUserName());</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="反射操作泛型"><a href="#反射操作泛型" class="headerlink" title="反射操作泛型"></a>反射操作泛型</h3><blockquote>
+<p>Java采用泛型擦除的机制来引入泛型,Java中的泛型仅仅是给编译器javac使用的,确保数据的安全性和免去强制类型转换问题﹐但是，一旦编译完成,所有和泛型有关的类型全部擦除</p>
+</blockquote>
+<blockquote>
+<p>为了通过反射操作这些类型，Java新增了ParameterizedType , GenericArrayType ,TypeVariable和 WildcardType几种类型来代表不能被归一到Class类中的类型但是又和原始类型齐名的类型.</p>
+</blockquote>
+<ul>
+<li>ParameterizedType:表示一种参数化类型,比如Collection<String></String></li>
+<li>GenericArrayType:表示一种元素类型是参数化类型或者类型变量的数组类型</li>
+<li>TypeVariable:是各种类型变量的公共父接口</li>
+<li>WildcardType:代表一种通配符类型表达式</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Method method = Test01.class.getMethod(<span class="string">&quot;test01&quot;</span>, Map.class, List.class);</span><br><span class="line"><span class="comment">//获得泛型的参数信息</span></span><br><span class="line">Type[] genericParameterTypes = method.getGenericParameterTypes();</span><br><span class="line"><span class="keyword">for</span> (Type genericParameterType : genericParameterTypes) &#123;</span><br><span class="line">    <span class="comment">//System.out.println(genericParameterType);</span></span><br><span class="line">    <span class="comment">//泛型的参数类型是否等于结构化的参数类型</span></span><br><span class="line">    <span class="keyword">if</span> (genericParameterType <span class="keyword">instanceof</span> ParameterizedType)&#123;</span><br><span class="line">        <span class="comment">//获得真实的泛型参数类型</span></span><br><span class="line">        Type[] actualTypeArguments = ((ParameterizedType) genericParameterType).getActualTypeArguments();</span><br><span class="line">        <span class="keyword">for</span> (Type actualTypeArgument : actualTypeArguments) &#123;</span><br><span class="line">            System.out.println(actualTypeArgument);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Method method1 = Test01.class.getMethod(<span class="string">&quot;test02&quot;</span>,<span class="keyword">null</span>);</span><br><span class="line">Type genericReturnType = method1.getGenericReturnType();</span><br><span class="line"><span class="keyword">if</span> (genericReturnType <span class="keyword">instanceof</span> ParameterizedType)&#123;</span><br><span class="line">    Type[] actualTypeArguments = ((ParameterizedType) genericReturnType).getActualTypeArguments();</span><br><span class="line">    <span class="keyword">for</span> (Type actualTypeArgument : actualTypeArguments) &#123;</span><br><span class="line">        System.out.println(actualTypeArgument);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="获取注解信息"><a href="#获取注解信息" class="headerlink" title="获取注解信息"></a>获取注解信息</h2><blockquote>
+<p>什么是ORM</p>
+</blockquote>
+<p>ORM 对象关系映射(Object relationship Mapping)</p>
+<ul>
+<li>类和表结构对应</li>
+<li>属性和字段对应</li>
+<li>对象和记录对应</li>
+</ul>
+<h3 id="利用注解和反射完成类和表结构的映射关系"><a href="#利用注解和反射完成类和表结构的映射关系" class="headerlink" title="利用注解和反射完成类和表结构的映射关系"></a>利用注解和反射完成类和表结构的映射关系</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获得class类</span></span><br><span class="line">Class cTudent=Class.forName(<span class="string">&quot;cn.com.test.Student&quot;</span>);</span><br><span class="line"><span class="comment">//获得类所有注解</span></span><br><span class="line">Annotation[] declaredAnnotations = cTudent.getDeclaredAnnotations();</span><br><span class="line"><span class="comment">//获得指定注解</span></span><br><span class="line">Annotation annotation=(dbName)cTudent.getDeclaredAnnotation(dbName.class);</span><br></pre></td></tr></table></figure>
+
+
+      </div>
+      <div class="post-tags-categories">
+        
+        <div class="tags">
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B/" class="">
+              编程
+            </a>
+          
+            <a href="/tags/%E9%9D%A2%E5%90%91%E5%BA%95%E5%B1%82/" class="">
+              面向底层
+            </a>
+          
+        </div>
+        
+      </div>
+      
+    </article>
+    <!-- 上一篇文章和下一篇文章 -->
+    
+      <!-- 文章详情页的上一页和下一页 -->
+<div class="post-nav">
+
+
+
+  
+  <div class="post-nav-prev post-nav-item">
+    <div class="post-nav-img" style="background-size: cover; 
+      background-position: center center;">
+      <img class="lazyload lazyload placeholder" src="/medias/10.jpg" class="lazyload placeholder" data-srcset="/medias/10.jpg" srcset="https://img2.baidu.com/it/u=2037979560,2772131037&fm=26&fmt=auto&gp=0.jpg" alt="">
+    </div>
+    <a href="/posts/52715.html" class="post-nav-link">
+      <div class="title">
+        <i class="fas fa-angle-left"></i> 上一篇:
+        <div class="title-text">redis入门</div>
+      </div>
+      
+      <!-- <div class="content">
+        Redis简单入门Redis是一个开源的，先进的 key-value 存储可用于构建高性能，可扩展的 Web 应用程序的
+      </div> -->
+    </a>
+  </div>
+
+
+
+  
+  <div class="post-nav-next post-nav-item">
+    <div class="post-nav-img" style="background-size: cover; 
+      background-position: center center;">
+      <img class="lazyload lazyload placeholder" src="/medias/8.jpg" class="lazyload placeholder" data-srcset="/medias/8.jpg" srcset="https://img2.baidu.com/it/u=2037979560,2772131037&fm=26&fmt=auto&gp=0.jpg" src="" alt="">
+    </div>
+    <a href="/posts/9650.html" class="post-nav-link">
+      <div class="title">
+        下一篇: <i class="fas fa-angle-right"></i>
+        <div class="title-text">Java网络编程</div>
+      </div>
+      <!-- <div class="content">
+        作为一个程序员，学习计算机网络知识可以说是必不可少的，本篇是我在学习java网络编程过程中的笔记，作为此博客的第一篇文章
+      </div> -->
+    </a>
+  </div>
+
+</div>
+
+    
+    
+
+    <!-- 打赏 -->
+    
+      <div id="appDonate" class="post-donate">
+  <div id="donate_board" class="donate_bar center" ref="donate">
+    <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏" @click="showDialogDrawer()"></a>
+  </div>
+  <transition name="fade">
+    <div 
+      class="donate-box-mask"
+      v-cloak 
+      v-show="visible"
+      @click="cancelDialogDrawer()"
+    >
+    </div>
+  </transition>
+  <transition name="bounce">
+    <div class="donate-box" v-cloak v-show="visible">
+      <div class="donate-box_close">
+        <i class="fas fa-times" aria-hidden="true" @click="cancelDialogDrawer" pointer></i>
+      </div>
+      <div class="donate-box_title">
+        <h4>
+          投喂~
+        </h4>
+      </div>
+      <div class="donate-box_tab">
+        <div class="Alipay" pointer :class="{'active': tabActive === 'Alipay'}" @click="changeTabActive('Alipay')">
+          支付宝
+        </div>
+        <div class="WeChatpay" pointer :class="{'active': tabActive === 'WeChatpay'}" @click="changeTabActive('WeChatpay')">
+          微信
+        </div>
+      </div>
+      <div class="donate-box_img">
+        <div class="AlipayImg" v-show="tabActive === 'Alipay'">
+          <img src="/medias/zfb.jpg" class="lazyload placeholder" data-srcset="/medias/zfb.jpg" srcset="https://img2.baidu.com/it/u=2037979560,2772131037&fm=26&fmt=auto&gp=0.jpg" alt="支付宝打赏" />
+        </div> 
+        <div class="WeChatpayImg" v-show="tabActive === 'WeChatpay'">
+          <img src="/medias/wx.jpg" class="lazyload placeholder" data-srcset="/medias/wx.jpg" srcset="https://img2.baidu.com/it/u=2037979560,2772131037&fm=26&fmt=auto&gp=0.jpg" alt="微信打赏" />
+        </div>
+      </div>
+    </div>
+  </transition>
+</div>
+
+<script>
+  var body = document.body || document.documentElement || window;
+  var vm = new Vue({
+    el: '#appDonate',
+    data: {
+      visible: false,
+      tabActive: 'Alipay',
+      top: 0,
+    },
+    computed: {
+    },
+    mounted() {
+    },
+    methods: {
+      showDialogDrawer() {
+        this.visible = true;
+        // 防止页面滚动，只能让弹框滚动
+        // function getScroll() {
+        //   return {
+        //     left: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0,
+        //     top: window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
+        //   };
+        // }
+        this.top = $(document).scrollTop() // or getScroll().top
+        // console.log('aa', $('.main-content'));
+        body.style.cssText = 'overflow: hidden;';
+      },
+      cancelDialogDrawer() {
+        this.visible = false;
+        body.removeAttribute('style');
+        $(document).scrollTop(this.top)
+      },
+      changeTabActive(name) {
+        this.tabActive = name;
+      }
+    },
+    created() {}
+  })
+</script>
+    
+
+    <!-- 分享 -->
+    
+      <!-- https://github.com/overtrue/share.js -->
+<!-- 文章详情页的分享 -->
+<div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+
+<script src="/js/shareJs/social-share.min.js"></script>
+</script>
+
+<style>
+  .social-share {
+    margin: 20px 0;
+  }
+</style>
+
+
+    
+    
+    <!-- 评论 -->
+    <!-- 评论 -->
+
+  <div id="myComment">
+    
+      <div id="tcomment"></div>
+    
+  </div>
+
+<!-- comment script in themes\hexo-theme-bamboo\layout\_partial\scripts\index.ejs -->
+
+
+  </div>
+
+  <!-- 目录 -->
+  <!-- 文章详情页右侧目录 -->
+
+  <div class="toc-aside">
+    <div class="toc-main">
+      <div class="toc-aside-title">
+        <i class="fas fa-list-ul" aria-hidden="true"></i><span>本文目录</span>
+        
+          <div class="toc-open-close">本文目录</div>
+        
+      </div>
+      <div class="toc-content">
+        <div class="toc"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 手机端目录按钮 -->
+  <div id="toc-mobile-btn">
+    <i class="fas fa-list-ul" aria-hidden="true"></i>
+  </div>
+
+
+<script>
+  function closeToc(init) {
+    $(".toc-aside").css({'width': 0, 'padding': 0, 'transition': init ?  'noe' : 'width 0.3s' });
+    $(".toc-content").css({'width': 0});
+    $(".toc-aside-title span, .toc-aside-title i").css({'display': 'none'});
+    $(".main-content").css({'width': '75%', 'margin': '10px auto'});
+  };
+  function openToc() {
+    $(".main-content").css({'width': '65%', 'margin-right': '10px', 'margin-left': 'calc(35% - 350px)'});
+    $(".toc-aside").css({'width': '300px', 'padding': '0 10px', 'transition': 'width 0.3s'});
+    $(".toc-content").css({'width': '300px'});
+    $(".toc-aside-title span, .toc-aside-title i").css({'display': 'inline-block'});
+  }
+  function openBtnClickFn () {
+    let openOrCloseBtn = $('.toc-aside .toc-aside-title .toc-open-close');
+    let open = eval('' || 'false');
+    openOrCloseBtn.click(function() {
+      if (open) {
+        closeToc();
+        open = false;
+      } else {
+        openToc();
+        open = true;
+      }
+    });
+  };
+  openBtnClickFn();
+  initCloseTocWidth(true);
+
+  function initCloseTocWidth(init) {
+    if (window.innerWidth >= 992) {
+      let isClose = true;
+      isClose && closeToc(init)
+    }
+  }
+
+  document.addEventListener('pjax:complete', function () {
+    $(".toc-aside").css({'transition': 'no'});
+  })
+  document.addEventListener('pjax:complete', function () {
+    openBtnClickFn();
+  })
+  
+</script>
+
+  <!-- 图片放大 Wrap images with fancybox support -->
+  <script src="/js/wrapImage.js"></script>
+</div>
+
+<!-- 文章详情页背景图 -->
+<div id="appBgSwiper" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -2;"
+	:style="{'background-color': bgColor ? bgColor : 'transparent'}">
+	<transition-group tag="ul" :name="names">
+		<li v-for='(image,index) in img' :key='index' v-show="index === mark" class="bg-swiper-box">
+			<img :src="image" class="bg-swiper-img no-lazy">
+		</li>
+	</transition-group>
+</div>
+<script>
+	var vm = new Vue({
+		el: '#appBgSwiper',
+		data: {
+			names: '' || 'fade' || 'fade', // translate-fade fade
+			mark: 0,
+			img: [],
+			bgColor: '',
+			time: null
+		},
+		methods: {   //添加方法
+			change(i, m) {
+				if (i > m) {
+					// this.names = 'fade';
+				} else if (i < m) {
+					// this.names = 'fade';
+				} else {
+					return;
+				}
+				this.mark = i;
+			},
+			prev() {
+				// this.names = 'fade';
+				this.mark--;
+				if (this.mark === -1) {
+					this.mark = 3;
+					return
+				}
+			},
+			next() {
+				// this.names = 'fade';
+				this.mark++;
+				if (this.mark === this.img.length) {
+					this.mark = 0;
+					return
+				}
+			},
+			autoPlay() {
+				// this.names = 'fade';
+				this.mark++;
+				if (this.mark === this.img.length) {
+					this.mark = 0;
+					return
+				}
+			},
+			play() {
+				let bgImgDelay = '' || '180000'
+				let delay = parseInt(bgImgDelay) || 180000;
+				this.time = setInterval(this.autoPlay, delay);
+			},
+			enter() {
+				clearInterval(this.time);
+			},
+			leave() {
+				this.play();
+			}
+		},
+		created() {
+			this.play()
+		},
+		beforeDestroy() {
+			clearInterval(this.time);
+		},
+		mounted() {
+			let prop = '' || '';
+			let isImg = prop.includes('.bmp') || prop.includes('.jpg') || prop.includes('.png') || prop.includes('.tif') || prop.includes('.gif') || prop.includes('.pcx') || prop.includes('.tga') || prop.includes('.exif') || prop.includes('.fpx') || prop.includes('.psd') || prop.includes('.cdr') || prop.includes('.pcd') || prop.includes('.dxf') || prop.includes('.ufo') || prop.includes('.eps') || prop.includes('.ai') || prop.includes('.raw') || prop.includes('.WMF') || prop.includes('.webp') || prop.includes('.jpeg') || prop.includes('http://') || prop.includes('https://')
+			if (isImg) {
+				let img = prop.split(',');
+				let configRoot = '/'
+				let arrImg = [];
+				img.forEach(el => {
+					var Expression = /http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+					var objExp = new RegExp(Expression);
+
+					if (objExp.test(el)) {
+						// http or https
+						arrImg.push(el);
+					} else {
+						// 非http or https开头
+						// 本地文件
+						let firstStr = el.charAt(0);
+						if (firstStr == '/') {
+							el = el.substr(1); // 删除第一个字符 '/',因为 configRoot最后一个字符为 /
+						}
+						el = configRoot + el;
+						arrImg.push(el);
+					}
+				})
+				this.img = arrImg;
+			} else {
+				this.bgColor = prop;
+			}
+		}
+	})
+</script>
+
+<style>
+	.bg-swiper-box {
+		position: absolute;
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	.bg-swiper-img {
+		object-fit: cover;
+		width: 100%;
+		height: 100%;
+	}
+</style>
+
+
+
+
+  <script>
+  function loadMermaid() {
+    if (document.getElementsByClassName('mermaid').length) {
+      if (window.mermaidJsLoad) mermaid.init()
+      else {
+        loadScript('https://unpkg.com/browse/mermaid@8.13.4/dist/mermaid.min.js').then(() => {
+          window.mermaidJsLoad = true
+          mermaid.initialize({
+            theme: 'default',
+          })
+          if ('false') {
+            mermaid.init();
+          }
+        })
+      }
+    }
+  };
+  document.addEventListener("DOMContentLoaded", function () {
+    loadMermaid();
+  })
+
+  document.addEventListener('pjax:complete', function () {
+    loadMermaid();
+  })
+  
+</script>
+
+
+      </main>
+    </div>
+
+    <!-- 页脚 -->
+    
+  
+  <div class="footer bg-color">
+    <div class="footer-main">
+      
+        
+          <div class="link">
+            
+          </div>
+        
+      
+        
+          <div class="footer-copyright">
+            <p>Copyright © 2021- 2021 <a target="_blank" rel="noopener" href="https://github.com">github</a> | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/">Hexo</a></p>
+
+          </div>
+        
+      
+        
+          
+            <!-- 不蒜子统计 -->
+            <!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+      <i class="fas fa-eye" aria-hidden="true"></i>本站总访问量：<span id="busuanzi_value_site_pv"></span> 次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+      <i class="fas fa-users" aria-hidden="true"></i>本站访客数：<span id="busuanzi_value_site_uv"></span> 人
+</span>
+
+          
+        
+      
+        
+          <div class="footer-custom">
+            
+              <div><p><a style="text-decoration:none;" href="https://beian.miit.gov.cn/" target="_blank">湘ICP备2021019427号-1</a> | <a target="_blank" rel="noopener" href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral"><image style="vertical-align:middle" src="/medias/yun_logo6.png"/></a></p>
+</div>
+            
+          </div>
+        
+      
+    </div>
+  </div>
+
+
+
+    <!-- 渲染暗黑按钮 -->
+    
+      <div class="dark">
+  <div class="dark-content">
+    <i class="fas fa-moon" aria-hidden="true"></i>
+    <!-- <span>关灯</span> -->
+  </div>
+  
+</div>
+
+<script>
+  $(function() {
+    let isDark = JSON.parse(localStorage.getItem('dark'))  || JSON.parse('false');
+    if (isDark) {
+      $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fas fa-lightbulb" aria-hidden="true"></i>
+          </div>
+          `
+        );
+    }
+    $('.dark').click(function() {
+      if ($(document.body).is('.darkModel')) {
+        $(document.body).removeClass('darkModel');
+        localStorage.setItem('dark', false);
+        $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fas fa-moon" aria-hidden="true"></i>
+          </div>
+          `
+        );
+      } else {
+        $(document.body).addClass('darkModel');
+        localStorage.setItem('dark', true);
+        $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fas fa-lightbulb" aria-hidden="true"></i>
+          </div>
+          `
+        );
+      }
+    })
+  })
+</script>
+    
+    <!-- 渲染回到顶部按钮 -->
+    
+      <div class="goTop top-btn-color" pointer>
+  <i class="fas fa-arrow-up" aria-hidden="true"></i>
+</div>
+<script src="/js/goTop.js"></script>
+
+    
+    <!-- 渲染左下角音乐播放器 -->
+    
+      <link rel="stylesheet" href="/js/aplayer/APlayer@1.10.1.min.css">
+<style>
+.aplayer .aplayer-lrc p {
+  
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px !important;
+}
+
+.aplayer .aplayer-lrc p.aplayer-lrc-current {
+  
+  font-size: 15px;
+  color: #42b983;
+}
+
+
+.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+  left: -66px !important;
+}
+
+.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+  left: 0px !important;
+}
+
+
+</style>
+<meting-js  
+  class=""
+  server="tencent"
+  type="playlist"
+  id="8125684272"
+  fixed='true'
+  autoplay='false'
+  theme='#42b983'
+  loop='all'
+  order='list'
+  preload='auto'
+  volume='0.7'
+  list-folded='true'
+>
+</meting-js>
+
+<!-- <style>
+  #aplayer {
+    position: fixed;
+    left: 0;
+    bottom: 300px;
+  }
+</style> -->
+<script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+    
+
+    <!-- 图片放大 -->
+    
+      <script src="/js/fancybox/jquery.fancybox.min.js"></script>
+    
+
+    <!-- 百度解析 -->
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <!-- 背景彩带 -->
+    
+
+    <script src="/js/utils/index.js"></script>
+    <script src="/js/app.js"></script>
+    
+    <!-- 文章目录所需js -->
+<link href="/js/tocbot/tocbot.css" rel="stylesheet">
+<script src="/js/tocbot/tocbot.min.js"></script>
+
+<script>
+  var headerEl = 'h2, h3, h4',  //headers 
+    content = '.post-detail',//文章容器
+    idArr = {};  //标题数组以确定是否增加索引id
+  //add #id
+  var option = {
+    // Where to render the table of contents.
+    tocSelector: '.toc',
+    // Where to grab the headings to build the table of contents.
+    contentSelector: content,
+    // Which headings to grab inside of the contentSelector element.
+    headingSelector: headerEl,
+    scrollSmooth: true,
+    scrollSmoothOffset: -80,
+    headingsOffset: -($(window).height() * 0.4 - 45),
+    positionFixedSelector: '.toc-main',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+    activeLinkClass: 'is-active-link',
+    // onClick: function (e) {},
+  }
+  if ($('.toc').length > 0) {
+
+    $(content).children(headerEl).each(function () {
+      //去除空格以及多余标点
+      var headerId = $(this).text().replace(/[\s|\~|`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\_|\+|\=|\||\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\：|\，|\。]/g, '');
+
+      headerId = headerId.toLowerCase();
+      if (idArr[headerId]) {
+        //id已经存在
+        $(this).attr('id', headerId + '-' + idArr[headerId]);
+        idArr[headerId]++;
+      }
+      else {
+        //id未存在
+        idArr[headerId] = 1;
+        $(this).attr('id', headerId);
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+      tocbot.init(option);
+      mobileTocClick();
+    });
+
+  }
+
+  window.tocScrollFn = function () {
+    return bamboo.throttle(function () {
+      findHeadPosition();
+    }, 100)()
+  }
+  window.addEventListener('scroll', tocScrollFn);
+
+  const findHeadPosition = function (top) {
+    if ($('.toc-list').length <= 0) {
+      return false;
+    }
+    setTimeout(() => {  // or DOMContentLoaded 
+      autoScrollToc();
+    }, 0);
+  }
+
+  const autoScrollToc = function () {
+    const $activeItem = document.querySelector('.is-active-link');
+    const $cardToc = document.querySelector('.toc-content');
+    const activePosition = $activeItem.getBoundingClientRect().top
+    const sidebarScrollTop = $cardToc.scrollTop
+    if (activePosition > (document.documentElement.clientHeight - 100)) {
+      $cardToc.scrollTop = sidebarScrollTop + 150
+    }
+    if (activePosition < 100) {
+      $cardToc.scrollTop = sidebarScrollTop - 150
+    }
+  }
+
+  document.addEventListener('pjax:send', function () {
+    if ($('.toc').length) {
+      tocbot.destroy();
+    }
+  });
+
+  document.addEventListener('pjax:complete', function () {
+    if ($('.toc').length) {
+      tocbot.init(option);
+      mobileTocClick();
+    }
+  });
+  
+  // 手机端toc按钮点击出现目录
+  const mobileTocClick = function () {
+    const $cardTocLayout = document.getElementsByClassName('toc-aside')[0];
+    const $cardToc = $cardTocLayout.getElementsByClassName('toc-content')[0];
+    let right = '45px';
+    if (window.innerWidth >= 551 && window.innerWidth <= 992) {
+      right = '100px'
+    }
+    const mobileToc = {
+      open: () => {
+        $cardTocLayout.style.cssText = 'animation: toc-open .3s; opacity: 1; right: ' + right
+      },
+
+      close: () => {
+        $cardTocLayout.style.animation = 'toc-close .2s'
+        setTimeout(() => {
+          $cardTocLayout.style.cssText = "opacity:''; animation: ''; right: ''"
+        }, 100)
+      }
+    }
+    document.getElementById('toc-mobile-btn').addEventListener('click', () => {
+      if (window.getComputedStyle($cardTocLayout).getPropertyValue('opacity') === '0') mobileToc.open()
+      else mobileToc.close()
+    })
+
+    $cardToc.addEventListener('click', (e) => {
+      if (window.innerWidth < 992) { // 小于992px的时候
+        mobileToc.close()
+      }
+    })
+  }
+</script>
+
+<style>
+  .is-position-fixed {
+    position: sticky !important;
+    top: 74px;
+  }
+
+  .toc-main ul {
+    counter-reset: show-list;
+  }
+
+  .toc-main ul li::before {
+    content: counter(item)".";
+    display: block;
+    position: absolute;
+    left: 12px;
+    top: 0;
+  }
+</style> 
+
+<!-- 设置导航背景 -->
+<script>
+  let setHeaderClass = () => {
+    const headerMenuTransparent = true;
+    if (!headerMenuTransparent) { return; }
+    const nav = $('#navHeader');
+    const navTop = nav.outerHeight();
+    const winTop = $(window).scrollTop();
+    if(winTop > navTop) {
+      nav.addClass('header-bg-color');
+    }
+    else {
+      nav.removeClass('header-bg-color');
+    }
+  };
+
+  let scrollCollect = () => {
+    return bamboo.throttle(function (e) {
+      setHeaderClass();
+    }, 200)()
+  }
+
+  let initHeaderBg = () => {
+    setHeaderClass();
+  }
+
+  setHeaderClass();
+  window.addEventListener('scroll', scrollCollect);
+
+  document.addEventListener('pjax:send', function () {
+    window.removeEventListener('scroll', scrollCollect)
+  })
+  document.addEventListener('pjax:complete', function () {
+    window.addEventListener('scroll', scrollCollect);
+    setHeaderClass();
+  })
+</script> 
+
+<!-- 渲染issues标签里的内容 -->
+<script>
+  function loadIssuesJS() {
+    if ($(".post-detail").find(".issues-api").length == 0) {
+      return;
+    } 
+    loadScript('/js/issues/index.js');
+  };
+  $(function () {
+    loadIssuesJS();
+  });
+  document.addEventListener('pjax:complete', function () {
+    if (typeof IssuesAPI == "undefined") {
+      loadIssuesJS();
+    }
+  })
+</script>
+
+<!-- 输入框打字特效 -->
+<!-- 输入框打字特效 -->
+
+  <script src="/js/activate-power-mode.js"></script>
+  <script>
+    POWERMODE.colorful = true;  // 打开随机颜色特效
+    POWERMODE.shake = false;    // 关闭输入框抖动
+    document.body.addEventListener('input', POWERMODE);//监听打字事件
+  </script>
+
+
+<!-- markdown代码一键复制功能 -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/v-plugs-ayu/lib/ayu.css">
+  <script src="https://cdn.jsdelivr.net/npm/v-plugs-ayu/lib/ayu.umd.min.js"></script>
+  <script src="/js/clipboard/clipboard.min.js"></script>
+  <div id="appCopy">
+  </div>
+  <script data-pjax>
+    var vm = new Vue({
+      el: '#appCopy',
+      data: {
+      },
+      computed: {
+      },
+      mounted() {
+        const that = this;
+        var copy = '复制';
+        /* code */
+        var initCopyCode = function () {
+          var copyHtml = '';
+          copyHtml += '<button class="btn-copy" data-clipboard-snippet="" style="position:absolute;top:0;right:0;z-index:1;">';
+          copyHtml += '<i class="fas fa-copy"></i><span>' + copy + '</span>';
+          copyHtml += '</button>';
+          $(".post-detail pre").not('.gutter pre').wrap("<div class='codeBox' style='position:relative;width:100%;'></div>")
+          $(".post-detail pre").not('.gutter pre').before(copyHtml);
+          new ClipboardJS('.btn-copy', {
+            target: function (trigger) {
+              return trigger.nextElementSibling;
+            }
+          });
+        }
+        initCopyCode();
+        $('.btn-copy').unbind('click').bind('click', function () {
+          doSomething();
+        })
+        $(document).unbind('keypress').bind('keypress', function (e) {
+          if (e.ctrlKey && e.keyCode == 67) {
+            doSomething();
+          }
+        })
+
+        function doSomething() {
+          that.$notify({
+            title: "成功",
+            content: "你复制了什么呢？记得声明转载呀。",
+            type: 'success'
+          })
+        }
+      },
+      methods: {
+      },
+      created() { }
+    })
+  </script>
+  
+
+<!-- 图片懒加载 -->
+<script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 0
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    lazyLoadInstance.update();
+  });
+  document.addEventListener('pjax:complete', function () {
+    lazyLoadInstance.update();
+  });
+</script>
+
+
+<!-- 卡片滚动动画 -->
+   
+
+<!-- 评论所需js -->
+
+  
+    <script src="https://cdn.jsdelivr.net/npm/twikoo@1.4.13/dist/twikoo.all.min.js"></script>
+
+<script type="text/javascript">
+  comment_el = '#tcomment';
+  load_twikoo = function () {
+    if ($(comment_el).length) {
+      twikoo.init({
+        envId: 'luoyamyblog-6g2gdq5ja2b8ad8d',
+        el: '#tcomment',
+        region: '',
+        path: ''
+      })
+    }
+  }
+
+  $(document).ready(load_twikoo);
+  document.addEventListener('pjax:complete', function () {
+    load_twikoo();
+  });
+</script>
+  
+
+
+<!-- 鼠标点击特效 -->
+<!-- 爱心点击 -->
+
+  
+    <script src="/js/cursor/fireworks.js"></script>
+  
+
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" data-pjax></script>
+
+
+    <!-- pjax -->
+    
+
+<!-- pjax -->
+
+
+	<!--崩溃欺骗-->
+	<script type="text/javascript" src="/js/crash/crash.js"></script>
+  </body>
+</html>
