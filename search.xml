@@ -50,6 +50,28 @@
 <li>port：端口号</li>
 <li>PID：当前redis进程的PID</li>
 </ol>
+<h3 id="3-安装系统服务"><a href="#3-安装系统服务" class="headerlink" title="3.安装系统服务"></a>3.安装系统服务</h3><p>将redis加入windows服务中</p>
+<p>通过管理员打开cmd进入redis安装目录</p>
+<p>输入以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">redis-server --service-install redis.windows.conf --loglevel verbose</span><br></pre></td></tr></table></figure>
+
+<p>如果服务已经存在了，可以输入命令sc delete 服务名</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sc delete redis</span><br><span class="line">我的redis是服务名</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/oyjc13/pic@main/img/202112140926535.png" class="lazyload placeholder" data-srcset="https://cdn.jsdelivr.net/gh/oyjc13/pic@main/img/202112140926535.png" srcset="https://img2.baidu.com/it/u=2037979560,2772131037&fm=26&fmt=auto&gp=0.jpg"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/oyjc13/pic@main/img/202112140927779.png" class="lazyload placeholder" data-srcset="https://cdn.jsdelivr.net/gh/oyjc13/pic@main/img/202112140927779.png" srcset="https://img2.baidu.com/it/u=2037979560,2772131037&fm=26&fmt=auto&gp=0.jpg" alt="image-20211214092717692"></p>
+<p><strong>服务启动命令：</strong>    </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">redis-server --service-start</span><br></pre></td></tr></table></figure>
+
+<p><strong>停止命令:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">redis-server --service-start</span><br></pre></td></tr></table></figure>
+
+<p><strong>同时redis可以安装多个实例:</strong></p>
+<ol>
+<li>redis-server –service-install –service-name redisService1 –port 10001</li>
+<li>redis-server –service-install –service-name redisService1 –port 10002</li>
+<li>redis-server –service-install –service-name redisService1 –port 10003</li>
+</ol>
 <h2 id="3-常用命令"><a href="#3-常用命令" class="headerlink" title="3.常用命令"></a>3.常用命令</h2><p>运行redis根目录下的redis-cli.exe文件，这是redis下载后自带的客户端工具，它可以用来连接到redis服务器</p>
 <p>首先往缓存添加key和value</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//set key value </span><br><span class="line">set Name rain</span><br></pre></td></tr></table></figure>
@@ -64,15 +86,13 @@
 <p>从缓存中删除</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//del key</span><br><span class="line">del Name</span><br></pre></td></tr></table></figure>
 
-<p><font color="green"><strong>补充</strong></font>:</p>
-<p>查看所有key:</p>
+<h3 id="补充"><a href="#补充" class="headerlink" title="补充:"></a><font color="green"><strong>补充</strong></font>:</h3><p>查看所有key:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">keys *</span><br></pre></td></tr></table></figure>
 
 <p>删除所有key(清空一个数据库)</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">flusshdb</span><br></pre></td></tr></table></figure>
 
-<p><font color="red"><strong>设置过期时间</strong></font>:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//expire keyName seconds(秒)</span><br><span class="line">expire Name 10</span><br></pre></td></tr></table></figure>
+<h3 id="设置过期时间"><a href="#设置过期时间" class="headerlink" title="设置过期时间:"></a><font color="red"><strong>设置过期时间</strong></font>:</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//expire keyName seconds(秒)</span><br><span class="line">expire Name 10</span><br></pre></td></tr></table></figure>
 
 <p>对于过期的key，redis不会立即删除</p>
 <p>redis有三种清楚策略:</p>
@@ -81,8 +101,7 @@
 <li>主动删除：因为惰性删除无法保证及时删除，所以redis会定期主动删除一些过期的key</li>
 <li>内存:当前已用内存超过maxmemory限定时，触发主动清除策略</li>
 </ul>
-<p><font color="red"><strong>设置密码</strong></font>:</p>
-<p>由于是根据windows.conf启动的redis，所以我们从redis根目录中找到requirepass</p>
+<h3 id="设置密码"><a href="#设置密码" class="headerlink" title="设置密码:"></a><font color="red"><strong>设置密码</strong></font>:</h3><p>由于是根据windows.conf启动的redis，所以我们从redis根目录中找到requirepass</p>
 <p><img src="https://cdn.jsdelivr.net/gh/oyjc13/pic@main/img/202112091233399.png" class="lazyload placeholder" data-srcset="https://cdn.jsdelivr.net/gh/oyjc13/pic@main/img/202112091233399.png" srcset="https://img2.baidu.com/it/u=2037979560,2772131037&fm=26&fmt=auto&gp=0.jpg" alt="image-20211209123306295"></p>
 <p> #是注释内容，下面那行就是我的密码设置，更改后保存</p>
 <p><font color="red">！！！根目录下有一个文件叫windows-service.conf，如上图，我们是根据windows.conf启动的redis服务器，因此在这个文件下更改密码无法生效，找到windows.conf下的requirepass foobared在下方更改密码</font></p>
@@ -423,7 +442,7 @@
 <p>网络编程：TCP/IP  C/S架构</p>
 <h2 id="2-网络通信的要素"><a href="#2-网络通信的要素" class="headerlink" title="2.网络通信的要素"></a>2.网络通信的要素</h2><p>如何实现网络通信？</p>
 <p><strong>通信双方地址</strong></p>
-<p><strong>规则：网络通<img src="https://cdn.jsdelivr.net/gh/oyjc13/pic@main/img/202112081153336.png" class="lazyload placeholder" data-srcset="https://cdn.jsdelivr.net/gh/oyjc13/pic@main/img/202112081153336.png" srcset="https://img2.baidu.com/it/u=2037979560,2772131037&fm=26&fmt=auto&gp=0.jpg" alt="网络协议">信的协议</strong> udp，tcp<br><img src="/posts/9650.htm/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE.png" class="lazyload placeholder" data-srcset="/posts/9650.htm/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE.png" srcset="https://img2.baidu.com/it/u=2037979560,2772131037&fm=26&fmt=auto&gp=0.jpg" alt="网络协议"></p>
+<p><strong>规则：网络通信的协议</strong> udp，tcp<img src="https://cdn.jsdelivr.net/gh/oyjc13/pic@main/img/202112081153336.png" class="lazyload placeholder" data-srcset="https://cdn.jsdelivr.net/gh/oyjc13/pic@main/img/202112081153336.png" srcset="https://img2.baidu.com/it/u=2037979560,2772131037&fm=26&fmt=auto&gp=0.jpg" alt="网络协议"></p>
 <h2 id="3-IP"><a href="#3-IP" class="headerlink" title="3.IP"></a>3.IP</h2><p>IP地址:InetAddress </p>
 <ul>
 <li><p>唯一定位一台网络上计算机</p>
